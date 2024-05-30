@@ -1,0 +1,43 @@
+{% extends 'game/base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/view.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% set firstPosition = positions | first %}
+    <div class="view">
+        <table class="map">
+            <tr>
+                {% for position in positions %}
+                    {% if (loop.index != 1) and position.x == firstPosition.x %}
+                        </tr><tr>
+                    {% endif %}
+                    <td>
+                        <a href="{{ path('game_view', {positionId: position.id}) }}">
+                            <div class="user">
+                                {% if (position.user) %}
+                                    <img src="{{ asset('assets/user/goku.png') }}">
+                                {% endif %}
+                            </div>
+                        </a>
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
+        <div class="view-info">
+            <div>
+                Position observée: x: {{ position.x }} | y: {{ position.y }}
+            </div>
+            <div>
+                Joueur observé:
+                {% if position.user %}
+                    {{ position.user.username }}
+                {% endif %}
+            </div>
+            <div>
+{#                Afficher les actions possible sur la case séléctionnée#}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    <div class="user-info">
+        {% if app.user is not null %}
+            <p>{{ app.user.username }}</p>
+            <div div class="user-status">
+                <div class="progressbar-wrapper">
+                    <div title="health" class="progressbar" style="width: {{ app.user.health / app.user.healthMax * 100}}%">{{ app.user.health }}/{{ app.user.healthMax }}</div>
+                </div>
+                <div class="progressbar-wrapper">
+                    <div title="strength" class="progressbar" style="width: {{ app.user.strength / app.user.strengthMax * 100}}%">{{ app.user.strength }}/{{ app.user.strengthMax }}</div>
+                </div>
+                <div class="progressbar-wrapper">
+                    <div title="stamina" class="progressbar" style="width: {{ app.user.stamina / app.user.staminaMax * 100}}%">{{ app.user.stamina }}/{{ app.user.staminaMax }}</div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

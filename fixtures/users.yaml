@@ -13,3 +13,14 @@ App\Entity\User:
     strengthMax: 100
     stamina: 55
     staminaMax: 100
+  user_2:
+    username: 'Goku'
+    email: 'goku@gmail.com'
+    password: <{hash}>
+    roles: ['ROLE_USER']
+    health: 20
+    healthMax: 100
+    strength: 90
+    strengthMax: 100
+    stamina: 55
+    staminaMax: 100

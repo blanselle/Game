@@ -12,5 +12,6 @@ for($i = -30; $i <= 30; $i++) {
 }
 
 $position['App\Entity\Position'][sprintf('position-%d-%d', 0, 0)]['user'] = '@user_1';
+$position['App\Entity\Position'][sprintf('position-%d-%d', 0, 2)]['user'] = '@user_2';
 
 return $position;
