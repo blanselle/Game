@@ -6,6 +6,7 @@ for($i = -30; $i <= 30; $i++) {
         $position['App\Entity\Position'][sprintf('position-%d-%d', $i, $j)] = [
             'x' => $i,
             'y' => $j,
+            'ground' => '@ground_1'
         ];
     }
 }

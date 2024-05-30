@@ -1,5 +1,1 @@
-Gréer Ground
-Link ground to position
-Fixture ground
-Fixture ground to position
 Render map with ground and user

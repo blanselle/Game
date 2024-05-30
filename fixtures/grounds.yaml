@@ -1,0 +1,5 @@
+App\Entity\Ground:
+  ground_1:
+    name: 'desert'
+  ground_2:
+    name: 'water'

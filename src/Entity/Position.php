@@ -38,6 +38,9 @@ class Position
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?User $user;
 
+    #[ORM\ManyToOne(targetEntity: Ground::class, inversedBy: 'positions')]
+    private ?Ground $ground = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -82,6 +85,18 @@ class Position
     public function setUser(?User $user): Position
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getGround(): ?Ground
+    {
+        return $this->ground;
+    }
+
+    public function setGround(?Ground $ground): Position
+    {
+        $this->ground = $ground;
 
         return $this;
     }
