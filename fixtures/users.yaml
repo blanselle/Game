@@ -1,0 +1,17 @@
+parameters:
+  hash: $2y$13$KFwT4oP/WuWXUu.qkwePMevormO1BFKB26jeF.2dIG5QcBNXWKVT6
+
+App\Entity\User:
+  user_1:
+    username: 'Admin'
+    email: 'blanselle@gmail.com'
+    password: <{hash}>
+    roles: ['ROLE_USER']
+    created_at: <(new \DateTime('2014-02-02'))>
+    updated_at: <(new \DateTime('2014-02-02'))>
+    health: 20
+    healthMax: 100
+    strength: 90
+    strengthMax: 100
+    stamina: 55
+    staminaMax: 100

@@ -1,0 +1,6 @@
+App\Entity\Position:
+  position_1:
+    x: 0
+    y: 0
+    created_at: <(new \DateTime('2014-02-02'))>
+    updated_at: <(new \DateTime('2014-02-02'))>

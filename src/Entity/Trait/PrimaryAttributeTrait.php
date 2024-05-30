@@ -84,7 +84,7 @@ trait PrimaryAttributeTrait
         return $this->strengthMax;
     }
 
-    public function setStrengthMax(int $strengthMax): PrimaryAttributeTrait
+    public function setStrengthMax(int $strengthMax): self
     {
         $this->strengthMax = $strengthMax;
         return $this;
@@ -95,7 +95,7 @@ trait PrimaryAttributeTrait
         return $this->strength;
     }
 
-    public function setStrength(int $strength): PrimaryAttributeTrait
+    public function setStrength(int $strength): self
     {
         $this->strength = $strength;
         return $this;

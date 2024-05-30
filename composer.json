@@ -75,6 +75,7 @@
         }
     },
     "require-dev": {
+        "hautelook/alice-bundle": "^2.13",
         "symfony/stopwatch": "7.0.*",
         "symfony/web-profiler-bundle": "7.0.*"
     }
