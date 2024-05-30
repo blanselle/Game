@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Game{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block body %}
+    {% if app.user is not null %}
+        <p>Bonjour {{ app.user.username }}</p>
+    {% endif %}
+{% endblock %}

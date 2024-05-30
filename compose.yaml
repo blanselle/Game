@@ -1,0 +1,75 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:latest
+    container_name: db
+    environment:
+      - POSTGRES_DB=${DB_DATABASE:-database}
+      - POSTGRES_USER=${DB_USERNAME:-username}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-password}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app.local
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    depends_on:
+      - php
+    volumes:
+      - ./public:/var/www/html/public
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/ssl:/etc/nginx/ssl
+      - ./docker/volumes/var/run/php:/var/run/php
+    networks:
+      app.local:
+        aliases:
+          - game
+  fpm:
+    image: app/fpm
+    build:
+      context: ./
+      target: build_dev
+      dockerfile: docker/fpm/Dockerfile
+    container_name: fpm
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www/html
+#      - /etc/ssl/certs:/etc/ssl/certs:ro
+      - ./docker/volumes/.bash_history:/home/symfony-quick-starter/.bash_history
+      - ./docker/volumes/var/run/php:/var/run/php
+    networks:
+      - app.local
+
+###> doctrine/doctrine-bundle ###
+  database:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "${POSTGRES_DB:-app}", "-U", "${POSTGRES_USER:-app}"]
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
+volumes:
+
+
+###> doctrine/doctrine-bundle ###
+  database_data:
+###< doctrine/doctrine-bundle ###
+  postgres-data: ~
+
+networks:
+  app.local:
+    name: app.local
+    external: true
