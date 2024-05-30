@@ -36,6 +36,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $username = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: Position::class)]
+    private ?Position $position = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +105,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(?string $username): User
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getPosition(): ?Position
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?Position $position): User
+    {
+        $this->position = $position;
+
         return $this;
     }
 }

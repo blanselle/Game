@@ -34,6 +34,10 @@ class Position
     #[ORM\Column]
     private ?int $y;
 
+    #[ORM\OneToOne(inversedBy: 'position', targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    private ?User $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -66,6 +70,18 @@ class Position
     public function setY(?int $y): self
     {
         $this->y = $y;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): Position
+    {
+        $this->user = $user;
 
         return $this;
     }
