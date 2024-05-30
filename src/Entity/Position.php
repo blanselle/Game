@@ -15,6 +15,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
     fields: ['x', 'y'],
     message: 'This position already exists',
 )]
+#[ORM\UniqueConstraint(
+    name: 'unique_position',
+    columns: ['x', 'y']
+)]
 class Position
 {
     use TimestampableEntity;
