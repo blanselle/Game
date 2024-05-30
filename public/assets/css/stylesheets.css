@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.user-info {
+    display:flex;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.user-info p{
+    padding: 10px;
+}
+
+.user-status {
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+}

@@ -25,11 +25,11 @@ trait PrimaryAttributeTrait
 
     // Détermine la capacité de port et les points d'endurance max
     #[ORM\Column(type: Types::INTEGER)]
-    private int $strenghMax = 100;
+    private int $strengthMax = 100;
 
     // Points d'endurance courants
     #[ORM\Column(type: Types::INTEGER)]
-    private int $strengh = 100;
+    private int $strength = 100;
 
     public function getHealthMax(): int
     {
@@ -79,27 +79,25 @@ trait PrimaryAttributeTrait
         return $this;
     }
 
-    public function getStrenghMax(): int
+    public function getStrengthMax(): int
     {
-        return $this->strenghMax;
+        return $this->strengthMax;
     }
 
-    public function setStrenghMax(int $strenghMax): self
+    public function setStrengthMax(int $strengthMax): PrimaryAttributeTrait
     {
-        $this->strenghMax = $strenghMax;
-
+        $this->strengthMax = $strengthMax;
         return $this;
     }
 
-    public function getStrengh(): int
+    public function getStrength(): int
     {
-        return $this->strengh;
+        return $this->strength;
     }
 
-    public function setStrengh(int $strengh): self
+    public function setStrength(int $strength): PrimaryAttributeTrait
     {
-        $this->strengh = $strengh;
-
+        $this->strength = $strength;
         return $this;
     }
 }

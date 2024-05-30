@@ -1,0 +1,35 @@
+:root {
+    --progress: grey;
+    --health: red;
+    --strength: green;
+    --stamina: blue;
+}
+
+.progressbar-wrapper {
+    background-color: #dfe6e9;
+    color: white;
+    border-radius: 5px;
+    width: 30%;
+    margin: 0 0 10px 0;
+}
+
+.progressbar {
+    background-color: var(--progress);
+    color: white;
+    padding: 5px;
+    text-align: right;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.progressbar[title="health"] {
+    background-color: var(--health);
+}
+
+.progressbar[title="strength"] {
+    background-color: var(--strength);
+}
+
+.progressbar[title="stamina"] {
+    background-color: var(--stamina);
+}
