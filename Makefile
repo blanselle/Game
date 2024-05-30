@@ -23,6 +23,9 @@ install:
 	make up
 	make url
 
+fixt:
+	$(EXEC_DOCKER_FPM) bin/console hautelook:fixtures:load --purge-with-truncate
+
 .PHONY: install-mkcert mkcert-generate-certificates
 install-mkcert: # @see https://github.com/FiloSottile/mkcert
 ifeq ($(shell which mkcert),)

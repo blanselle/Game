@@ -7,8 +7,6 @@ App\Entity\User:
     email: 'blanselle@gmail.com'
     password: <{hash}>
     roles: ['ROLE_USER']
-    created_at: <(new \DateTime('2014-02-02'))>
-    updated_at: <(new \DateTime('2014-02-02'))>
     health: 20
     healthMax: 100
     strength: 90
