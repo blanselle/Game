@@ -2,14 +2,13 @@
 
 namespace App\Action;
 
+use App\Entity\Ground;
 use App\Entity\Position;
 use Doctrine\ORM\EntityManagerInterface;
 
-class Run implements ActionInterface
+class Run extends AbstractAction
 {
-    public function __construct(private EntityManagerInterface $em)
-    {
-    }
+    const int STRENGTH_NEED = 5;
 
     public function getIdentifier(): string
     {
@@ -23,12 +22,11 @@ class Run implements ActionInterface
 
     public function support(Position $from, Position $to): bool
     {
-        $distance = (int)(sqrt(pow($to->getX()-$from->getX(), 2) + pow($to->getY()-$from->getY(), 2)));
-
         return
-            $to->getGround()->getName() != 'water'
-            && null === $to->getUser()
-            && 2 === $distance;
+            $to->getGround()->getName() != Ground::GROUND_WATER
+            && null === $to->getFighter()
+            && 2 === $this->getDistance($from, $to)
+            && $from->getFighter()->getStrength() >= self::STRENGTH_NEED;
     }
 
     public function run(Position $from, Position $to): void
@@ -37,7 +35,9 @@ class Run implements ActionInterface
             return;
         }
 
-        $from->getUser()->setPosition($to);
+        $from->getFighter()->setStrength($from->getFighter()->getStrength() - self::STRENGTH_NEED);
+
+        $from->getFighter()->setPosition($to);
         $this->em->flush();
     }
 }

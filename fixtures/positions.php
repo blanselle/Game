@@ -2,7 +2,7 @@
 
 $position['App\Entity\Position'] = [];
 for($i = -30; $i <= 30; $i++) {
-    for($j = -20; $j <= 20; $j++) {
+    for($j = -30; $j <= 30; $j++) {
         $position['App\Entity\Position'][sprintf('position-%d-%d', $i, $j)] = [
             'x' => $i,
             'y' => $j,
@@ -14,6 +14,7 @@ for($i = -30; $i <= 30; $i++) {
 $position['App\Entity\Position'][sprintf('position-%d-%d', 0, 0)]['user'] = '@user_1';
 $position['App\Entity\Position'][sprintf('position-%d-%d', 0, 2)]['user'] = '@user_2';
 
+$position['App\Entity\Position'][sprintf('position-%d-%d', 0, 1)]['npc'] = '@npc_1';
 
 $position['App\Entity\Position'][sprintf('position-%d-%d', 2, 3)]['ground'] = '@ground_2';
 $position['App\Entity\Position'][sprintf('position-%d-%d', 3, 3)]['ground'] = '@ground_2';

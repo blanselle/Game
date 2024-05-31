@@ -5,11 +5,9 @@ namespace App\Action;
 use App\Entity\Position;
 use Doctrine\ORM\EntityManagerInterface;
 
-class Punch implements ActionInterface
+class Punch extends AbstractAction
 {
-    public function __construct(private EntityManagerInterface $em)
-    {
-    }
+    const int STRENGTH_NEED = 5;
 
     public function getIdentifier(): string
     {
@@ -23,9 +21,10 @@ class Punch implements ActionInterface
 
     public function support(Position $from, Position $to): bool
     {
-        $distance = (int)(sqrt(pow($to->getX()-$from->getX(), 2) + pow($to->getY()-$from->getY(), 2)));
-
-        return null !== $to->getUser() && 1 === $distance;
+        return
+            null !== $to->getFighter()
+            && 1 === $this->getDistance($from, $to)
+            && $from->getFighter()->getStrength() >= self::STRENGTH_NEED;
     }
 
     public function run(Position $from, Position $to): void
@@ -34,7 +33,7 @@ class Punch implements ActionInterface
             return;
         }
 
-        $to->getUser()->setHealth($to->getUser()->getHealth() - 15);
+        $to->getFighter()->setHealth($to->getFighter()->getHealth() - self::STRENGTH_NEED);
         $this->em->flush();
     }
 }

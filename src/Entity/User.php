@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'Un compte existe déjà avec cet email')]
 
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, FighterInterface
 {
     use TimestampableEntity;
     use PrimaryAttributeTrait;
@@ -115,8 +115,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setPosition(?Position $position): User
     {
-//        $this->position = $position;
-
         $position->setUser($this);
         $this->getPosition()->setUser(null);
 

@@ -10,6 +10,9 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 #[ORM\Entity]
 class Ground
 {
+    const string GROUND_WATER = 'water';
+    const string GROUND_SANDY = 'sandy';
+
     use TimestampableEntity;
 
     #[ORM\Id]

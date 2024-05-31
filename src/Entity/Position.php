@@ -35,6 +35,10 @@ class Position
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?User $user;
 
+    #[ORM\OneToOne(inversedBy: 'position', targetEntity: Npc::class)]
+    #[ORM\JoinColumn(name: 'npc_id', referencedColumnName: 'id')]
+    private ?Npc $npc;
+
     #[ORM\ManyToOne(targetEntity: Ground::class, inversedBy: 'positions')]
     private ?Ground $ground = null;
 
@@ -86,6 +90,18 @@ class Position
         return $this;
     }
 
+    public function getNpc(): ?Npc
+    {
+        return $this->npc;
+    }
+
+    public function setNpc(?Npc $npc): Position
+    {
+        $this->npc = $npc;
+
+        return $this;
+    }
+
     public function getGround(): ?Ground
     {
         return $this->ground;
@@ -96,5 +112,10 @@ class Position
         $this->ground = $ground;
 
         return $this;
+    }
+
+    public function getFighter(): ?FighterInterface
+    {
+        return $this->getUser() ?? $this->getNpc();
     }
 }

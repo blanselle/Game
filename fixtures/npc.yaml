@@ -1,0 +1,9 @@
+App\Entity\Npc:
+  npc_1:
+    name: 'Squelette'
+    health: 20
+    healthMax: 20
+    strength: 20
+    strengthMax: 20
+    stamina: 20
+    staminaMax: 20

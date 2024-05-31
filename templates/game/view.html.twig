@@ -15,9 +15,12 @@
                     {% endif %}
                     <td style="background: url({{ asset(position.ground.filePath) }});">
                         <a href="{{ path('game_view', {positionId: position.id}) }}">
-                            <div class="user">
+                            <div class="fighter">
                                 {% if (position.user) %}
                                     <img src="{{ asset('assets/img/user/goku.png') }}">
+                                {% endif %}
+                                {% if (position.npc) %}
+                                    <img src="{{ asset('assets/img/npc/skeleton.png') }}">
                                 {% endif %}
                             </div>
                         </a>
