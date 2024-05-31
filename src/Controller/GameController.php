@@ -30,6 +30,8 @@ class GameController extends AbstractController
             $action = $actionManager->getAction($actionIdentifier);
             if (null !== $action) {
                 $action->run($this->getUser()->getPosition(), $position);
+                $this->addFlash('hasReport', true);
+                $this->addFlash('report', $action->getReport());
 
                 return $this->redirectToRoute('game_view');
             }
@@ -37,7 +39,7 @@ class GameController extends AbstractController
 
         return new Response($this->renderView('game/view.html.twig', [
             'positions' => $positions,
-            'position' => $position,
+            'targetPosition' => $position,
             'actions' => $actions
         ]));
     }

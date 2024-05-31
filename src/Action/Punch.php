@@ -34,6 +34,14 @@ class Punch extends AbstractAction
         }
 
         $this->fighterManager->decreaseStrength($from->getFighter(), self::STRENGTH_NEED);
-        $this->fighterManager->applyDamage($to->getFighter(),self::DAMAGES);
+
+        $target = $to->getFighter();
+        $this->fighterManager->applyDamage($target,self::DAMAGES);
+
+        $this->report = $this->twig->render('game/report/punch.html.twig', [
+            'damages' => self::DAMAGES,
+            'publicName' => $target->getPublicName(),
+            'KO' => 0 === $target->getHealth(),
+        ]);
     }
 }

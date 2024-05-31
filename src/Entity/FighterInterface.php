@@ -31,4 +31,6 @@ interface FighterInterface
     public function getStrength(): int;
 
     public function setStrength(int $strength): self;
+
+    public function getPublicName(): string;
 }

@@ -127,4 +127,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
 
         return $this;
     }
+
+    public function getPublicName(): string
+    {
+        return $this->getUsername();
+    }
 }

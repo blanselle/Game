@@ -14,13 +14,14 @@
                         </tr><tr>
                     {% endif %}
                     <td style="background: url({{ asset(position.ground.filePath) }});">
-                        <a href="{{ path('game_view', {positionId: position.id}) }}">
+                        <a href="{{ path('game_view', {positionId: position.id}) }}" class="{% if targetPosition.id == position.id %}active{% endif %}">
                             <div class="fighter">
+                                <div class="highlight"></div>
                                 {% if (position.user) %}
-                                    <img src="{{ asset('assets/img/user/goku.png') }}">
+                                    <img class="picto" src="{{ asset('assets/img/user/goku.png') }}">
                                 {% endif %}
                                 {% if (position.npc) %}
-                                    <img src="{{ asset('assets/img/npc/skeleton.png') }}">
+                                    <img class="picto" src="{{ asset('assets/img/npc/skeleton.png') }}">
                                 {% endif %}
                             </div>
                         </a>
@@ -28,21 +29,40 @@
                 {% endfor %}
             </tr>
         </table>
-        <div class="view-info">
-            <div>
-                Position observée: x: {{ position.x }} | y: {{ position.y }}
-            </div>
-            <div>
-                Joueur observé:
-                {% if position.user %}
-                    {{ position.user.username }}
+        <div class="view-detail">
+            {% if app.flashes('hasReport') %}
+                <div class="report">
+                    {% for message in app.flashes('report') %}
+                        {{ message | raw }}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="view-info">
+                    <div>
+                        Position observée: x: {{ targetPosition.x }} | y: {{ targetPosition.y }}
+                    </div>
+                    {% if targetPosition.user %}
+                        <div>
+                            Cible observée: {{ targetPosition.user.publicName }}
+                        </div>
+                    {% endif %}
+                    {% if targetPosition.npc %}
+                        <div>
+                            Cible observée: {{ targetPosition.npc.publicName }}
+                        </div>
+                    {% endif %}
+                </div>
+                {% if actions|length > 0 %}
+                    <div class="view-actions">
+                        <div>
+                            Actions:
+                            {% for action in actions %}
+                                <a href="{{ path('game_view', {positionId: targetPosition.id, action: action.identifier})  }}">{{ action.name }}</a>
+                            {% endfor  %}
+                        </div>
+                    </div>
                 {% endif %}
-            </div>
-            <div>
-                {% for action in actions %}
-                    <a href="{{ path('game_view', {positionId: position.id, action: action.identifier})  }}">{{ action.name }}</a>
-                {% endfor  %}
-            </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

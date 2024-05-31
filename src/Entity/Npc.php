@@ -66,4 +66,9 @@ class Npc implements FighterInterface
 
         return $this;
     }
+
+    public function getPublicName(): string
+    {
+        return $this->getName();
+    }
 }

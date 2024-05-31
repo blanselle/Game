@@ -3,24 +3,43 @@
     justify-content: space-between;
 }
 
-.view-info {
+.view-detail {
     width: 68%;
 }
 
 .map {
     border: 1px solid black;
-    width: 30%;
+    margin: 0 auto;
 }
 
 .map td{
-    border: 1px solid black;
     height: 32px;
     width: 32px;
 }
 
 .map td .fighter{
-    border: 1px solid black;
     width: 100%;
     height: 100%;
     text-align: center;
+    position: relative;
+}
+
+.map a:hover .highlight {
+    background-color: #fff;
+    opacity: 0.3;
+    width: 100%;
+    height: 100%;
+}
+
+.map a.active .highlight {
+    background-color: #fff;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+}
+
+.map a .picto {
+    position: absolute;
+    left: 0;
+    top: 0;
 }

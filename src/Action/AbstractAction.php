@@ -4,12 +4,16 @@ namespace App\Action;
 
 use App\Entity\Position;
 use App\Manager\FighterManager;
+use Twig\Environment;
 
 class AbstractAction implements ActionInterface
 {
-    public function __construct(protected FighterManager $fighterManager)
-    {
-    }
+    public function __construct(
+        protected FighterManager $fighterManager,
+        protected Environment $twig,
+        protected string $report = '',
+    )
+    {}
 
     public function getIdentifier(): string
     {
@@ -35,5 +39,10 @@ class AbstractAction implements ActionInterface
 
     public function run(Position $from, Position $to): void
     {
+    }
+
+    public function getReport(): string
+    {
+        return $this->report;
     }
 }

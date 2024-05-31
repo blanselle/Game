@@ -13,4 +13,6 @@ interface ActionInterface
     public function support(Position $from, Position $to): bool;
 
     public function run(Position $from, Position $to): void;
+
+    public function getReport(): string;
 }
