@@ -2,6 +2,8 @@ App\Entity\Ground:
   ground_1:
     name: '<(App\Entity\Ground::GROUND_SANDY)>'
     filePath: 'assets/img/ground/<(App\Entity\Ground::GROUND_SANDY)>.png'
+    walkable: true
   ground_2:
     name: '<(App\Entity\Ground::GROUND_WATER)>'
     filePath: 'assets/img/ground/<(App\Entity\Ground::GROUND_WATER)>.gif'
+    walkable: false

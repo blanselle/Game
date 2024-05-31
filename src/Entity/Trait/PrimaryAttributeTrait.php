@@ -50,6 +50,10 @@ trait PrimaryAttributeTrait
 
     public function setHealth(int $health): self
     {
+        if ($health < 0) {
+            $health = 0;
+        }
+
         $this->health = $health;
 
         return $this;

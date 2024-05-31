@@ -1,0 +1,17 @@
+{% extends 'game/base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/view.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="message">
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <a href="{{ path('game_view') }}">Accéder à ma vue</a>
+{% endblock %}

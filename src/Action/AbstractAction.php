@@ -3,11 +3,11 @@
 namespace App\Action;
 
 use App\Entity\Position;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Manager\FighterManager;
 
 class AbstractAction implements ActionInterface
 {
-    public function __construct(protected EntityManagerInterface $em)
+    public function __construct(protected FighterManager $fighterManager)
     {
     }
 

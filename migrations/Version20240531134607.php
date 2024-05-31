@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240531122127 extends AbstractMigration
+final class Version20240531134607 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,9 +20,7 @@ final class Version20240531122127 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP SEQUENCE non_player_character_id_seq CASCADE');
-        $this->addSql('CREATE SEQUENCE npc_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE ground (id INT NOT NULL, name VARCHAR(255) NOT NULL, file_path VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE ground (id INT NOT NULL, name VARCHAR(255) NOT NULL, file_path VARCHAR(255) DEFAULT NULL, walkable BOOLEAN NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE npc (id INT NOT NULL, name VARCHAR(255) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, health_max INT NOT NULL, health INT NOT NULL, stamina_max INT NOT NULL, stamina INT NOT NULL, strength_max INT NOT NULL, strength INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE position (id INT NOT NULL, user_id INT DEFAULT NULL, npc_id INT DEFAULT NULL, ground_id INT DEFAULT NULL, x INT NOT NULL, y INT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_462CE4F5A76ED395 ON position (user_id)');
@@ -40,8 +38,6 @@ final class Version20240531122127 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
-        $this->addSql('DROP SEQUENCE npc_id_seq CASCADE');
-        $this->addSql('CREATE SEQUENCE non_player_character_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('ALTER TABLE position DROP CONSTRAINT FK_462CE4F5A76ED395');
         $this->addSql('ALTER TABLE position DROP CONSTRAINT FK_462CE4F5CA7D6B89');
         $this->addSql('ALTER TABLE position DROP CONSTRAINT FK_462CE4F51D297B0A');

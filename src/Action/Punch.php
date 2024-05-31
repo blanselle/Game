@@ -3,7 +3,6 @@
 namespace App\Action;
 
 use App\Entity\Position;
-use Doctrine\ORM\EntityManagerInterface;
 
 class Punch extends AbstractAction
 {
@@ -33,7 +32,6 @@ class Punch extends AbstractAction
             return;
         }
 
-        $to->getFighter()->setHealth($to->getFighter()->getHealth() - self::STRENGTH_NEED);
-        $this->em->flush();
+        $this->fighterManager->applyDamage($from, $to,self::STRENGTH_NEED);
     }
 }

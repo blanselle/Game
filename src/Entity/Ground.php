@@ -29,6 +29,9 @@ class Ground
     #[ORM\Column(nullable: true)]
     private ?string $filePath;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $walkable = true;
+
     public function __construct()
     {
         $this->positions = new ArrayCollection();
@@ -99,6 +102,18 @@ class Ground
     public function setFilePath(?string $filePath): Ground
     {
         $this->filePath = $filePath;
+
+        return $this;
+    }
+
+    public function isWalkable(): bool
+    {
+        return $this->walkable;
+    }
+
+    public function setWalkable(bool $walkable): Ground
+    {
+        $this->walkable = $walkable;
 
         return $this;
     }

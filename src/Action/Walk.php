@@ -20,7 +20,7 @@ class Walk extends AbstractAction
     public function support(Position $from, Position $to): bool
     {
         return
-            $to->getGround()->getName() != Ground::GROUND_WATER
+            $to->getGround()->isWalkable()
             && null === $to->getFighter()
             && 1 === $this->getDistance($from, $to);
     }
@@ -31,7 +31,6 @@ class Walk extends AbstractAction
             return;
         }
 
-        $from->getFighter()->setPosition($to);
-        $this->em->flush();
+        $this->fighterManager->move($from, $to);
     }
 }

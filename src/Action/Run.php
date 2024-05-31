@@ -4,11 +4,10 @@ namespace App\Action;
 
 use App\Entity\Ground;
 use App\Entity\Position;
-use Doctrine\ORM\EntityManagerInterface;
 
 class Run extends AbstractAction
 {
-    const int STRENGTH_NEED = 5;
+    const int STRENGTH_NEEDS = 5;
 
     public function getIdentifier(): string
     {
@@ -23,10 +22,10 @@ class Run extends AbstractAction
     public function support(Position $from, Position $to): bool
     {
         return
-            $to->getGround()->getName() != Ground::GROUND_WATER
+            $to->getGround()->isWalkable()
             && null === $to->getFighter()
             && 2 === $this->getDistance($from, $to)
-            && $from->getFighter()->getStrength() >= self::STRENGTH_NEED;
+            && $from->getFighter()->getStrength() >= self::STRENGTH_NEEDS;
     }
 
     public function run(Position $from, Position $to): void
@@ -35,9 +34,6 @@ class Run extends AbstractAction
             return;
         }
 
-        $from->getFighter()->setStrength($from->getFighter()->getStrength() - self::STRENGTH_NEED);
-
-        $from->getFighter()->setPosition($to);
-        $this->em->flush();
+        $this->fighterManager->move($from, $to, self::STRENGTH_NEEDS);
     }
 }

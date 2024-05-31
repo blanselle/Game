@@ -1,1 +1,1 @@
-Manage death of fighter
+- manage event

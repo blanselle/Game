@@ -54,8 +54,15 @@ class Npc implements FighterInterface
 
     public function setPosition(?Position $position): Npc
     {
-        $position->setNpc($this);
-        $this->getPosition()->setNpc(null);
+        if (null != $position) {
+            $position->setNpc($this);
+        }
+
+        if (null !== $this->getPosition()) {
+            $this->getPosition()->setNpc(null);
+        }
+
+        $this->position = $position;
 
         return $this;
     }

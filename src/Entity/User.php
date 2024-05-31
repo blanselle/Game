@@ -115,8 +115,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
 
     public function setPosition(?Position $position): User
     {
-        $position->setUser($this);
-        $this->getPosition()->setUser(null);
+        if (null != $position) {
+            $position->setUser($this);
+        }
+
+        if (null !== $this->getPosition()) {
+            $this->getPosition()->setUser(null);
+        }
+
+        $this->position = $position;
 
         return $this;
     }
