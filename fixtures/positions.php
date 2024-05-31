@@ -33,4 +33,17 @@ $position['App\Entity\Position'][sprintf('position-%d-%d', 4, 1)]['ground'] = '@
 $position['App\Entity\Position'][sprintf('position-%d-%d', 5, 2)]['ground'] = '@ground_2';
 $position['App\Entity\Position'][sprintf('position-%d-%d', 5, 1)]['ground'] = '@ground_2';
 
+
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, 5)]['ground'] = '@ground_3';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, 4)]['ground'] = '@ground_3';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, 3)]['ground'] = '@ground_3';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, 2)]['ground'] = '@ground_3';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, 1)]['ground'] = '@ground_3';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, 0)]['ground'] = '@ground_3';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, -1)]['ground'] = '@ground_3';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, -2)]['ground'] = '@ground_3';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, -3)]['ground'] = '@ground_3';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, -4)]['ground'] = '@ground_3';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, -5)]['ground'] = '@ground_3';
+
 return $position;

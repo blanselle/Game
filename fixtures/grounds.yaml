@@ -7,3 +7,7 @@ App\Entity\Ground:
     name: '<(App\Entity\Ground::GROUND_WATER)>'
     filePath: 'assets/img/ground/<(App\Entity\Ground::GROUND_WATER)>.gif'
     walkable: false
+  ground_3:
+    name: '<(App\Entity\Ground::GROUND_COBBLESTONE)>'
+    filePath: 'assets/img/ground/<(App\Entity\Ground::GROUND_COBBLESTONE)>.png'
+    walkable: true

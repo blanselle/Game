@@ -12,6 +12,7 @@ class Ground
 {
     const string GROUND_WATER = 'water';
     const string GROUND_SANDY = 'sandy';
+    const string GROUND_COBBLESTONE = 'cobblestone';
 
     use TimestampableEntity;
 
