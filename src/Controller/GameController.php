@@ -2,18 +2,18 @@
 
 namespace App\Controller;
 
+use App\Action\ActionManager;
 use App\Repository\PositionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 class GameController extends AbstractController
 {
     #[Route('/game/view', name: 'game_view')]
-    public function view(Request $request, PositionRepository $positionRepository): Response
+    public function view(Request $request, PositionRepository $positionRepository, ActionManager $actionManager): Response
     {
         $position = $positionRepository->findOneByid($request->get('positionId', null));
         if (null === $position) {
@@ -26,7 +26,17 @@ class GameController extends AbstractController
             5
         );
 
-        $actions = [];
+        $actions = $actionManager->getActions($this->getUser()->getPosition(), $position);
+
+        $actionIdentifier = $request->get('action', null);
+        if (null !== $actionIdentifier) {
+            $action = $actionManager->getAction($actionIdentifier);
+            if (null !== $action) {
+                $action->run($this->getUser()->getPosition(), $position);
+
+                return $this->redirectToRoute('game_view');
+            }
+        }
 
         return new Response($this->renderView('game/view.html.twig', [
             'positions' => $positions,

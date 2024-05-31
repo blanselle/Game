@@ -1,1 +1,1 @@
-Manage possible action (marcher, courir, attaquer à main nue)
+Manage death of user

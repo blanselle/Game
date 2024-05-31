@@ -3,14 +3,13 @@
 namespace App\Entity;
 
 use App\Entity\Trait\PrimaryAttributeTrait;
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Entity]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'Un compte existe déjà avec cet email')]
 
@@ -116,7 +115,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setPosition(?Position $position): User
     {
-        $this->position = $position;
+//        $this->position = $position;
+
+        $position->setUser($this);
+        $this->getPosition()->setUser(null);
 
         return $this;
     }

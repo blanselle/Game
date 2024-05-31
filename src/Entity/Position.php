@@ -2,16 +2,12 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\PrimaryAttributeTrait;
-use App\Repository\GroundRepository;
-use App\Repository\UserRepository;
+use App\Repository\PositionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: GroundRepository::class)]
+#[ORM\Entity(repositoryClass: PositionRepository::class)]
 #[UniqueEntity(
     fields: ['x', 'y'],
     message: 'This position already exists',
