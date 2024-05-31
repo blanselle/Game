@@ -31,6 +31,6 @@ class Walk extends AbstractAction
             return;
         }
 
-        $this->fighterManager->move($from, $to);
+        $this->fighterManager->move($from->getFighter(), $to);
     }
 }

@@ -1,1 +1,2 @@
+- render fight report
 - manage event

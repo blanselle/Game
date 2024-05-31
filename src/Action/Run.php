@@ -34,6 +34,7 @@ class Run extends AbstractAction
             return;
         }
 
-        $this->fighterManager->move($from, $to, self::STRENGTH_NEEDS);
+        $this->fighterManager->decreaseStrength($from->getFighter(), self::STRENGTH_NEEDS);
+        $this->fighterManager->move($from->getFighter(), $to);
     }
 }

@@ -14,13 +14,13 @@ class FighterManager
     {
     }
 
-    public function applyDamage(Position $from, Position $to, int $damage): void
+    public function applyDamage(FighterInterface $fighter, int $damage): void
     {
-        $to->getFighter()->setHealth($to->getFighter()->getHealth() - $damage);
+        $fighter->setHealth($fighter->getHealth() - $damage);
         $this->em->flush();
 
-        if (0 === $to->getFighter()->getHealth()) {
-            $this->removeFromMap($to->getFighter());
+        if (0 === $fighter->getHealth()) {
+            $this->removeFromMap($fighter);
         }
     }
 
@@ -30,11 +30,15 @@ class FighterManager
         $this->em->flush();
     }
 
-    public function move(Position $from, Position $to, int $strengthNeeds = 0): void
+    public function decreaseStrength(FighterInterface $fighter, $strengthNeeds)
     {
-        $from->getFighter()->setStrength($from->getFighter()->getStrength() - $strengthNeeds);
+        $fighter->setStrength($fighter->getStrength() - $strengthNeeds);
+        $this->em->flush();
+    }
 
-        $from->getFighter()->setPosition($to);
+    public function move(FighterInterface $fighter, Position $to): void
+    {
+        $fighter->setPosition($to);
         $this->em->flush();
     }
 

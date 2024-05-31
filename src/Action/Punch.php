@@ -7,6 +7,7 @@ use App\Entity\Position;
 class Punch extends AbstractAction
 {
     const int STRENGTH_NEED = 5;
+    const int DAMAGES = 5;
 
     public function getIdentifier(): string
     {
@@ -32,6 +33,7 @@ class Punch extends AbstractAction
             return;
         }
 
-        $this->fighterManager->applyDamage($from, $to,self::STRENGTH_NEED);
+        $this->fighterManager->decreaseStrength($from->getFighter(), self::STRENGTH_NEED);
+        $this->fighterManager->applyDamage($to->getFighter(),self::DAMAGES);
     }
 }
