@@ -26,9 +26,12 @@ class GameController extends AbstractController
             5
         );
 
+        $actions = [];
+
         return new Response($this->renderView('game/view.html.twig', [
             'positions' => $positions,
-            'position' => $position
+            'position' => $position,
+            'actions' => $actions
         ]));
     }
 }

@@ -28,6 +28,9 @@ class Ground
     #[ORM\OneToMany(mappedBy: 'ground', targetEntity: Position::class)]
     private Collection $positions;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $filePath;
+
     public function __construct()
     {
         $this->positions = new ArrayCollection();
@@ -90,4 +93,15 @@ class Ground
         return null;
     }
 
+    public function getFilePath(): ?string
+    {
+        return $this->filePath;
+    }
+
+    public function setFilePath(?string $filePath): Ground
+    {
+        $this->filePath = $filePath;
+
+        return $this;
+    }
 }

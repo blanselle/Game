@@ -1,3 +1,1 @@
-Render map and user
-Render map with ground
 Manage possible action (marcher, courir, attaquer à main nue)

@@ -26,6 +26,12 @@ install:
 fixt:
 	$(EXEC_DOCKER_FPM) bin/console hautelook:fixtures:load --purge-with-truncate
 
+di:
+	$(EXEC_DOCKER_FPM) bin/console do:mi:di
+
+mi:
+	$(EXEC_DOCKER_FPM) bin/console do:mi:mi
+
 .PHONY: install-mkcert mkcert-generate-certificates
 install-mkcert: # @see https://github.com/FiloSottile/mkcert
 ifeq ($(shell which mkcert),)

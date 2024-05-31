@@ -1,5 +1,7 @@
 App\Entity\Ground:
   ground_1:
-    name: 'desert'
+    name: 'sandy'
+    filePath: 'assets/img/ground/sandy.png'
   ground_2:
     name: 'water'
+    filePath: 'assets/img/ground/water.gif'
