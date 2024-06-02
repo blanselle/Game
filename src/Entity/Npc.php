@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Trait\PrimaryAttributeTrait;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -22,6 +23,9 @@ class Npc implements FighterInterface
 
     #[ORM\OneToOne(mappedBy: 'npc', targetEntity: Position::class)]
     private ?Position $position = null;
+
+    #[ORM\OneToMany(mappedBy: 'npc', targetEntity: Event::class)]
+    private Collection $events;
 
     public function getId(): ?int
     {
@@ -70,5 +74,39 @@ class Npc implements FighterInterface
     public function getPublicName(): string
     {
         return $this->getName();
+    }
+
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function setEvents(Collection $events): Npc
+    {
+        $this->events = $events;
+
+        return $this;
+    }
+
+    public function addEvent(Event $event): Npc
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+        }
+
+        $event->setNpc($this);
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): Npc
+    {
+        if($this->events->contains($event)) {
+            $this->events->removeElement($event);
+        }
+
+        $event->setNpc(null);
+
+        return $this;
     }
 }

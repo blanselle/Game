@@ -38,9 +38,21 @@ class Punch extends AbstractAction
         $this->fighterManager->createEvent(
             $this->twig->render('game/event/punch.html.twig', [
                 'target' => $to->getFighter(),
+                'puncher' => $from->getFighter(),
                 'damages' => self::DAMAGES,
             ]),
-            $from
+            $from,
+            -(self::DAMAGES)
+        );
+
+        $this->fighterManager->createEvent(
+            $this->twig->render('game/event/punch.html.twig', [
+                'target' => $to->getFighter(),
+                'puncher' => $from->getFighter(),
+                'damages' => self::DAMAGES,
+            ]),
+            $to,
+            -(self::DAMAGES)
         );
 
         $target = $to->getFighter();

@@ -23,11 +23,19 @@ class Event
     private ?string $body = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'events')]
+    #[ORM\JoinColumn(nullable: true)]
     private $user;
+
+    #[ORM\ManyToOne(targetEntity: Npc::class, inversedBy: 'events')]
+    #[ORM\JoinColumn(nullable: true)]
+    private $npc;
 
     #[ORM\ManyToMany(targetEntity: User::class)]
     #[ORM\JoinTable(name: 'event_viewer')]
     private Collection $viewers;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $result = null;
 
     public function __construct()
     {
@@ -68,6 +76,18 @@ class Event
         return $this;
     }
 
+    public function getNpc()
+    {
+        return $this->npc;
+    }
+
+    public function setNpc(FighterInterface $npc)
+    {
+        $this->npc = $npc;
+
+        return $this;
+    }
+
     public function getViewers(): Collection
     {
         return $this->viewers;
@@ -94,6 +114,18 @@ class Event
         if($this->viewers->contains($user)) {
             $this->viewers->removeElement($user);
         }
+
+        return $this;
+    }
+
+    public function getResult(): ?int
+    {
+        return $this->result;
+    }
+
+    public function setResult(?int $result): Event
+    {
+        $this->result = $result;
 
         return $this;
     }

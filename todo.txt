@@ -1,1 +1,3 @@
+- manage event User
+- Manage event npc
 - manage weapons stuff

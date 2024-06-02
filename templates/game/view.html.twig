@@ -67,7 +67,7 @@
                         {% for event in targetEvents %}
                             <div class="event">
                                 <div class="when">{{ event.createdAt | date('d/m/Y H:i:s') }}</div>
-                                <div class="body">{{ event.body | raw }}</div>
+                                <div class="body">{{ event.body | raw }} ({{ event.result }} PV)</div>
                             </div>
                         {% endfor %}
                     </div>

@@ -31,6 +31,7 @@ class EventRepository extends ServiceEntityRepository
         return $qb
             ->join('e.viewers', 'u')
             ->where($qb->expr()->eq('e.user', $target->getId()))
+            ->where($qb->expr()->orX($qb->expr()->eq('e.user', $target->getId()), $qb->expr()->eq('e.npc', $target->getId())))
             ->andWhere($qb->expr()->eq('u.id', $viewer->getId()))
             ->orderBy('e.createdAt', 'desc')
             ->setMaxResults(15)
