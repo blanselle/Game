@@ -30,7 +30,7 @@
             </tr>
         </table>
         <div class="view-detail">
-            {% if app.flashes('hasReport') %}
+            {% if app.flashes('hasReport')%}
                 <div class="report">
                     {% for message in app.flashes('report') %}
                         {{ message | raw }}
@@ -60,6 +60,16 @@
                                 <a href="{{ path('game_view', {positionId: targetPosition.id, action: action.identifier})  }}">{{ action.name }}</a>
                             {% endfor  %}
                         </div>
+                    </div>
+                {% endif %}
+                {% if targetPosition.fighter %}
+                    <div class="events">
+                        {% for event in targetEvents %}
+                            <div class="event">
+                                <div class="when">{{ event.createdAt | date('d/m/Y H:i:s') }}</div>
+                                <div class="body">{{ event.body | raw }}</div>
+                            </div>
+                        {% endfor %}
                     </div>
                 {% endif %}
             {% endif %}

@@ -34,6 +34,11 @@ class Run extends AbstractAction
             return;
         }
 
+        $this->fighterManager->createEvent(
+            $this->twig->render('game/event/run.html.twig'),
+            $from
+        );
+
         $this->fighterManager->decreaseStrength($from->getFighter(), self::STRENGTH_NEEDS);
         $this->fighterManager->move($from->getFighter(), $to);
     }

@@ -2,10 +2,13 @@
 
 namespace App\Manager;
 
+use App\Entity\Event;
 use App\Entity\FighterInterface;
 use App\Entity\Position;
 use App\Entity\User;
 use App\Repository\PositionRepository;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 
 class FighterManager
@@ -59,5 +62,19 @@ class FighterManager
         $positionRepository = $this->em->getRepository(Position::class);
 
         return $positionRepository->getFreePositionArround($positionRepository->getResurrectPosition());
+    }
+
+    public function createEvent(string $body, Position $position)
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->em->getRepository(User::class);
+
+        $event = new Event();
+        $event->setBody($body);
+        $event->setUser($position->getFighter());
+        $event->setViewers(new ArrayCollection($userRepository->getUsersArround($position)));
+
+        $this->em->persist($event);
+        $this->em->flush();
     }
 }

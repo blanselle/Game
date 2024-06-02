@@ -22,7 +22,7 @@ class PositionRepository extends ServiceEntityRepository
         parent::__construct($registry, Position::class);
     }
 
-    public function getMapArround(Position $position, $offset): array
+    public function getMapArround(Position $position, $offset = 5): array
     {
         $qb = $this->createQueryBuilder('p');
 

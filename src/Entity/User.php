@@ -3,13 +3,16 @@
 namespace App\Entity;
 
 use App\Entity\Trait\PrimaryAttributeTrait;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'Un compte existe déjà avec cet email')]
 
@@ -37,6 +40,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
 
     #[ORM\OneToOne(mappedBy: 'user', targetEntity: Position::class)]
     private ?Position $position = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Event::class)]
+    private Collection $events;
+
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -131,5 +142,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
     public function getPublicName(): string
     {
         return $this->getUsername();
+    }
+
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function setEvents(Collection $events): User
+    {
+        $this->events = $events;
+
+        return $this;
+    }
+
+    public function addEvent(Event $event): User
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+        }
+
+        $event->setUser($this);
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): User
+    {
+        if($this->events->contains($event)) {
+            $this->events->removeElement($event);
+        }
+
+        $event->setUser(null);
+
+        return $this;
     }
 }

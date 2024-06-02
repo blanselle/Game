@@ -31,6 +31,11 @@ class Walk extends AbstractAction
             return;
         }
 
+        $this->fighterManager->createEvent(
+            $this->twig->render('game/event/walk.html.twig'),
+            $from
+        );
+
         $this->fighterManager->move($from->getFighter(), $to);
     }
 }

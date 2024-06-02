@@ -43,3 +43,7 @@
     left: 0;
     top: 0;
 }
+
+.event{
+    display: flex;
+}
