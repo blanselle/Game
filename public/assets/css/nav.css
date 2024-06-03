@@ -1,0 +1,8 @@
+.nav-link, .nav-link:focus, .nav-link:hover {
+    color: #fff;
+}
+
+.bg-brown {
+    --bs-bg-opacity: 1;
+    background-color: #60482D;
+}

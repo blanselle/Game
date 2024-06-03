@@ -51,7 +51,7 @@ class GameController extends AbstractController
             'positions' => $positions,
             'targetPosition' => $position,
             'actions' => $actions,
-            'targetEvents' => $position->getFighter() ? $eventRepository->getVisibleEvents($position->getFighter(), $this->getUser()) : []
+            'targetEvents' => $position->getFighter() ? $eventRepository->getVisibleEvents($position->getFighter(), $this->getUser()) : $eventRepository->getVisibleEvents($this->getUser(), $this->getUser())
         ]));
     }
 

@@ -31,48 +31,54 @@
         </table>
         <div class="view-detail">
             {% if app.flashes('hasReport')%}
-                <div class="report">
+                <div class="reports">
                     {% for message in app.flashes('report') %}
                         {{ message | raw }}
                     {% endfor %}
                 </div>
-            {% else %}
-                <div class="view-info">
-                    <div>
-                        Position observée: x: {{ targetPosition.x }} | y: {{ targetPosition.y }}
-                    </div>
-                    {% if targetPosition.user %}
-                        <div>
-                            Cible observée: {{ targetPosition.user.publicName }}
-                        </div>
-                    {% endif %}
-                    {% if targetPosition.npc %}
-                        <div>
-                            Cible observée: {{ targetPosition.npc.publicName }}
-                        </div>
-                    {% endif %}
+            {% endif %}
+            <div class="view-info">
+                <div>
+                    Position observée: x: {{ targetPosition.x }} | y: {{ targetPosition.y }}
                 </div>
-                {% if actions|length > 0 %}
-                    <div class="view-actions">
-                        <div>
-                            Actions:
-                            {% for action in actions %}
-                                <a href="{{ path('game_view', {positionId: targetPosition.id, action: action.identifier})  }}">{{ action.name }}</a>
-                            {% endfor  %}
-                        </div>
+                {% if targetPosition.user %}
+                    <div>
+                        Cible observée: {{ targetPosition.user.publicName }}
                     </div>
                 {% endif %}
-                {% if targetPosition.fighter %}
-                    <div class="events">
-                        {% for event in targetEvents %}
-                            <div class="event">
-                                <div class="when">{{ event.createdAt | date('d/m/Y H:i:s') }}</div>
-                                <div class="body">{{ event.body | raw }} ({{ event.result }} PV)</div>
-                            </div>
-                        {% endfor %}
+                {% if targetPosition.npc %}
+                    <div>
+                        Cible observée: {{ targetPosition.npc.publicName }}
                     </div>
                 {% endif %}
+            </div>
+            {% if actions|length > 0 %}
+                <div class="view-actions">
+                    <div>
+                        Actions:
+                        {% for action in actions %}
+                            <a href="{{ path('game_view', {positionId: targetPosition.id, action: action.identifier})  }}">{{ action.name }}</a>
+                        {% endfor  %}
+                    </div>
+                </div>
             {% endif %}
         </div>
     </div>
+    <section id="events">
+        <h2>
+            {% if (targetPosition.fighter and targetPosition.fighter !=  app.user) %}
+                Evénements de {{ targetPosition.fighter.publicName }}
+            {% else %}
+                Vos événements
+            {% endif %}
+        </h2>
+        <div class="events">
+            {% for event in targetEvents %}
+                <div class="event">
+                    <div class="when">{{ event.createdAt | date('d/m/Y H:i:s') }}</div>
+                    <div class="body">{{ event.body | raw }} {% if event.result %}({{ event.result }} PV){% endif %}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}
