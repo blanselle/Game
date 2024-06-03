@@ -15,6 +15,8 @@ $position['App\Entity\Position'][sprintf('position-%d-%d', 0, 0)]['user'] = '@us
 $position['App\Entity\Position'][sprintf('position-%d-%d', 0, 2)]['user'] = '@user_2';
 
 $position['App\Entity\Position'][sprintf('position-%d-%d', 0, 1)]['npc'] = '@npc_1';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, 1)]['npc'] = '@npc_2';
+$position['App\Entity\Position'][sprintf('position-%d-%d', -1, 0)]['npc'] = '@npc_3';
 
 $position['App\Entity\Position'][sprintf('position-%d-%d', 2, 3)]['ground'] = '@ground_2';
 $position['App\Entity\Position'][sprintf('position-%d-%d', 3, 3)]['ground'] = '@ground_2';

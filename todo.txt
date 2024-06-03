@@ -1,7 +1,7 @@
-- manage weapons stuff
 - manage armor stuff
+- manage attack with 'attack %' and 'defense %'
 - manage food product
-- manage inventory
+- manage inventory (render, equiping and removing) Warning: limit equiping by position (one weapons for left hand)
 - manage XP
 - manage levelup with primary attribute increase
 - manage levelup with bonus choice

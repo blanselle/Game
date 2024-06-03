@@ -73,7 +73,7 @@ class Npc implements FighterInterface
 
     public function getPublicName(): string
     {
-        return $this->getName();
+        return sprintf('%s (%d)', $this->getName(), $this->getId());
     }
 
     public function getEvents(): Collection

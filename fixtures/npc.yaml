@@ -7,3 +7,19 @@ App\Entity\Npc:
     strengthMax: 20
     stamina: 20
     staminaMax: 20
+  npc_2:
+    name: 'Squelette'
+    health: 20
+    healthMax: 20
+    strength: 20
+    strengthMax: 20
+    stamina: 20
+    staminaMax: 20
+  npc_3:
+    name: 'Squelette'
+    health: 20
+    healthMax: 20
+    strength: 20
+    strengthMax: 20
+    stamina: 20
+    staminaMax: 20

@@ -28,9 +28,6 @@ class Weapon
     #[ORM\Column]
     private int $damage = 0;
 
-    #[ORM\Column]
-    private int $attack = 0;
-
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'weapons')]
     #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;

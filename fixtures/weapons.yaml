@@ -4,7 +4,6 @@ App\Entity\Weapon:
     type: '<(App\Entity\Weapon::ITEM_TYPE_ONE_HAND)>'
     position: '<(App\Entity\Weapon::ITEM_POSITION_RIGHT_HAND)>'
     damage: 4
-    attack: 15
     worn: true
     shootingRange: 1
     encumbrance: 1
@@ -14,7 +13,6 @@ App\Entity\Weapon:
     type: '<(App\Entity\Weapon::ITEM_TYPE_ONE_HAND)>'
     position: '<(App\Entity\Weapon::ITEM_POSITION_LEFT_HAND)>'
     damage: 4
-    attack: 15
     worn: true
     shootingRange: 1
     encumbrance: 1

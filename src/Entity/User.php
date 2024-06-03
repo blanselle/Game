@@ -147,7 +147,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
 
     public function getPublicName(): string
     {
-        return $this->getUsername();
+        return sprintf('%s (%d)', $this->getUsername(), $this->getId());
     }
 
     public function getEvents(): Collection
