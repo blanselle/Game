@@ -109,4 +109,14 @@ class Npc implements FighterInterface
 
         return $this;
     }
+
+    public function getFreeHandsCount(): int
+    {
+        return 2;
+    }
+
+    public function getRightHandWeapon(): ?Weapon
+    {
+        return null;
+    }
 }

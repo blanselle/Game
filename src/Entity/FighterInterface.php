@@ -33,4 +33,8 @@ interface FighterInterface
     public function setStrength(int $strength): self;
 
     public function getPublicName(): string;
+
+    public function getFreeHandsCount(): int;
+
+    public function getRightHandWeapon(): ?Weapon;
 }

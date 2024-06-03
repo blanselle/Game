@@ -4,7 +4,7 @@ namespace App\Action;
 
 use App\Entity\Position;
 
-class Punch extends AbstractAction
+class RightHandAttack extends AbstractAction
 {
     const int STRENGTH_NEED = 5;
     const int DAMAGE = 5;
@@ -13,12 +13,12 @@ class Punch extends AbstractAction
 
     public function getIdentifier(): string
     {
-        return 'punch';
+        return 'RightHandAttack';
     }
 
     public function getName(): string
     {
-        return 'Coup de poing';
+        return 'Attaque main droite';
     }
 
     public function getDamage()
@@ -35,9 +35,10 @@ class Punch extends AbstractAction
     {
         return
             null !== $to->getFighter()
-            && 1 === $this->getDistance($from, $to)
-            && $from->getFighter()->getStrength() >= self::STRENGTH_NEED
-            && 1 <= $from->getFighter()->getFreeHandsCount();
+            && $from->getFighter()->getRightHandWeapon()
+            && $from->getFighter()->getRightHandWeapon()->getShootingRange() >= $this->getDistance($from, $to)
+            && 0 < $this->getDistance($from, $to)
+            && $from->getFighter()->getStrength() >= self::STRENGTH_NEED;
     }
 
     public function run(Position $from, Position $to): void
@@ -51,17 +52,18 @@ class Punch extends AbstractAction
 
         $this->fighterManager->decreaseStrength($attacker, self::STRENGTH_NEED);
 
-        $this->setDamage(self::DAMAGE);
-        $this->fighterManager->applyDamage($target,$this->getDamage());
+        $this->setDamage(self::DAMAGE + $attacker->getRightHandWeapon()->getDamage());
+        $this->fighterManager->applyDamage($target, $this->getDamage());
 
-        $this->report = $this->twig->render('game/report/punch.html.twig', [
+        $this->report = $this->twig->render('game/report/rightHandAttack.html.twig', [
             'damages' => $this->getDamage(),
+            'attacker' => $from->getFighter(),
             'publicName' => $target->getPublicName(),
             'KO' => 0 === $target->getHealth(),
         ]);
 
         $this->fighterManager->createEvent(
-            $this->twig->render('game/event/punch.html.twig', [
+            $this->twig->render('game/event/rightHandAttack.html.twig', [
                 'target' => $target,
                 'attacker' => $attacker,
                 'damages' => $this->getDamage(),
@@ -71,7 +73,7 @@ class Punch extends AbstractAction
         );
 
         $this->fighterManager->createEvent(
-            $this->twig->render('game/event/punch.html.twig', [
+            $this->twig->render('game/event/rightHandAttack.html.twig', [
                 'target' => $target,
                 'attacker' => $attacker,
                 'damages' => $this->getDamage(),

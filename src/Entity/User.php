@@ -18,6 +18,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface, FighterInterface
 {
+    const MAX_WORN_WEAPON = 2;
+
     use TimestampableEntity;
     use PrimaryAttributeTrait;
 
@@ -44,9 +46,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Event::class)]
     private Collection $events;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Weapon::class)]
+    private Collection $weapons;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->weapons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,5 +182,71 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
         $event->setUser(null);
 
         return $this;
+    }
+
+    public function getWeapons(): Collection
+    {
+        return $this->weapons;
+    }
+
+    public function setWeapons(Collection $weapons): User
+    {
+        $this->weapons = $weapons;
+
+        return $this;
+    }
+
+    public function addWeapon(Weapon $weapon): User
+    {
+        if ($this->getWeapons()->count() >= self::MAX_WORN_WEAPON) {
+            return $this;
+        }
+
+        if($this->weapons->contains($weapon)) {
+            $this->weapons->removeElement($weapon);
+        }
+
+        $weapon->setUser(null);
+
+        return $this;
+    }
+    public function removeWeapon(Weapon $weapon): User
+    {
+        if($this->weapons->contains($weapon)) {
+            $this->weapons->removeElement($weapon);
+        }
+
+        $weapon->setUser(null);
+
+        return $this;
+    }
+
+    public function getFreeHandsCount(): int
+    {
+        $freeHandsCount = self::MAX_WORN_WEAPON;
+        /** @var Weapon $weapon */
+        foreach ($this->getWeapons() as $weapon) {
+            if (0 === $freeHandsCount) {
+                continue;
+            }
+
+            if ($weapon->isWorn()) {
+                $freeHandsCount--;
+            }
+        }
+
+        return $freeHandsCount;
+    }
+
+    public function getRightHandWeapon(): ?Weapon
+    {
+        /** @var Weapon $weapon */
+        foreach ($this->getWeapons() as $weapon) {
+            if ($weapon->isWorn() && Weapon::ITEM_POSITION_RIGHT_HAND === $weapon->getPosition()) {
+                return $weapon;
+            }
+        }
+
+        return null;
     }
 }

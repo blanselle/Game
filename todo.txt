@@ -1,1 +1,31 @@
 - manage weapons stuff
+- manage armor stuff
+- manage food product
+- manage inventory
+- manage XP
+- manage levelup with primary attribute increase
+- manage levelup with bonus choice
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Tuer des monstres rapport de l'xp
+- A chaque niveau, on choisit d'augmener l'un des attributs primaires
+- système de bonus. A chaque niveau, on choisit un bonus parmis la liste proposée. Les bonus sont accessible en fonction du niveau.
+Exemple de capacité:
+    - Dégat à l'épée: +5%,
+    - Résistence au feu: +5%,
+    - esquive: +5%,
+    - attaque: +5%
+    - PX gagné par niveau: +2%,
+    - sortilège: boule de feu,
+    - technique: coup d'estoc,
