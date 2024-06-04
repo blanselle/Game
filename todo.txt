@@ -1,4 +1,3 @@
-- manage armor stuff
 - manage attack with 'attack %' and 'defense %'
 - manage food product
 - manage inventory (render, equiping and removing) Warning: limit equiping by position (one weapons for left hand)

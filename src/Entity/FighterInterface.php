@@ -37,4 +37,6 @@ interface FighterInterface
     public function getFreeHandsCount(): int;
 
     public function getRightHandWeapon(): ?Weapon;
+
+    public function getArmorLevel(): int;
 }

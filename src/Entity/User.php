@@ -49,10 +49,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Weapon::class)]
     private Collection $weapons;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Armor::class)]
+    private Collection $armors;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->weapons = new ArrayCollection();
+        $this->armors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -206,7 +210,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
             $this->weapons->removeElement($weapon);
         }
 
-        $weapon->setUser(null);
+        $weapon->setUser($this);
 
         return $this;
     }
@@ -217,6 +221,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
         }
 
         $weapon->setUser(null);
+
+        return $this;
+    }
+
+    public function getArmors(): Collection
+    {
+        return $this->armors;
+    }
+
+    public function setArmors(Collection $armors): User
+    {
+        $this->armors = $armors;
+
+        return $this;
+    }
+
+    public function addArmor(Armor $armor): self
+    {
+        if (!$this->armors->contains($armor)) {
+            $this->armors->add($armor);
+        }
+
+        $armor->setUser($this);
+
+        return $this;
+    }
+
+    public function removeArmor(Armor $armor): self
+    {
+        if ($this->armors->contains($armor)) {
+            $this->armors->removeElement($armor);
+        }
+
+        $armor->setUser(null);
 
         return $this;
     }
@@ -248,5 +286,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
         }
 
         return null;
+    }
+    public function getArmorLevel(): int
+    {
+        $armorLevel = 0;
+
+        /** @var Armor $armor */
+        foreach ($this->getArmors() as $armor) {
+            if (!$armor->isWorn()) {
+                continue;
+            }
+
+            $armorLevel += $armor->getArmor();
+        }
+
+        return $armorLevel;
     }
 }

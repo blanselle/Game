@@ -1,0 +1,9 @@
+App\Entity\Armor:
+  armor_1:
+    name: 'Armure de cuir'
+    type: '<(App\Entity\Armor::ITEM_TYPE_LIGHTWEIGHT)>'
+    position: '<(App\Entity\Armor::ITEM_POSITION_CHEST)>'
+    armor: 4
+    worn: true
+    encumbrance: 2
+    user: '@user_2'

@@ -119,4 +119,9 @@ class Npc implements FighterInterface
     {
         return null;
     }
+
+    public function getArmorLevel(): int
+    {
+        return 0;
+    }
 }

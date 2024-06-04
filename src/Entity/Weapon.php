@@ -36,6 +36,7 @@ class Weapon
     private bool $worn = false;
 
     #[ORM\Column]
+    // Portée
     private int $shootingRange = 1;
 
     public function getType(): string
@@ -70,18 +71,6 @@ class Weapon
     public function setDamage(int $damage): Weapon
     {
         $this->damage = $damage;
-
-        return $this;
-    }
-
-    public function getAttack(): int
-    {
-        return $this->attack;
-    }
-
-    public function setAttack(int $attack): Weapon
-    {
-        $this->attack = $attack;
 
         return $this;
     }

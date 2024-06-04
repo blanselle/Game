@@ -51,7 +51,12 @@ class Punch extends AbstractAction
 
         $this->fighterManager->decreaseStrength($attacker, self::STRENGTH_NEED);
 
-        $this->setDamage(self::DAMAGE);
+        $damage = self::DAMAGE - $to->getFighter()->getArmorLevel();
+        if (0 > $damage) {
+            $damage = 0;
+        }
+
+        $this->setDamage($damage);
         $this->fighterManager->applyDamage($target,$this->getDamage());
 
         $this->report = $this->twig->render('game/report/punch.html.twig', [
