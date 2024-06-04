@@ -18,10 +18,10 @@
                             <div class="fighter">
                                 <div class="highlight"></div>
                                 {% if (position.user) %}
-                                    <img class="picto" src="{{ asset('assets/img/user/goku.png') }}">
+                                    <img class="picto" src="{{ asset(position.user.imgPath) }}">
                                 {% endif %}
                                 {% if (position.npc) %}
-                                    <img class="picto" src="{{ asset('assets/img/npc/skeleton.png') }}">
+                                    <img class="picto" src="{{ asset(position.npc.imgPath) }}">
                                 {% endif %}
                             </div>
                         </a>

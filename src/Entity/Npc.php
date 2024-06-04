@@ -27,6 +27,9 @@ class Npc implements FighterInterface
     #[ORM\OneToMany(mappedBy: 'npc', targetEntity: Event::class)]
     private Collection $events;
 
+    #[ORM\Column]
+    private ?string $imgPath = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,5 +126,17 @@ class Npc implements FighterInterface
     public function getArmorLevel(): int
     {
         return 0;
+    }
+
+    public function getImgPath(): ?string
+    {
+        return $this->imgPath;
+    }
+
+    public function setImgPath(?string $imgPath): Npc
+    {
+        $this->imgPath = $imgPath;
+
+        return $this;
     }
 }

@@ -13,6 +13,7 @@ App\Entity\User:
     strengthMax: 100
     stamina: 55
     staminaMax: 100
+    imgPath: 'assets/img/user/goku.png'
   user_2:
     username: 'Goku'
     email: 'goku@gmail.com'
@@ -24,3 +25,4 @@ App\Entity\User:
     strengthMax: 100
     stamina: 55
     staminaMax: 100
+    imgPath: 'assets/img/user/goku.png'

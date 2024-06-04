@@ -39,4 +39,6 @@ interface FighterInterface
     public function getRightHandWeapon(): ?Weapon;
 
     public function getArmorLevel(): int;
+
+    public function getImgPath(): ?string;
 }

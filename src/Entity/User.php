@@ -52,6 +52,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Armor::class)]
     private Collection $armors;
 
+    #[ORM\Column]
+    private ?string $imgPath = null;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -301,5 +304,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
         }
 
         return $armorLevel;
+    }
+
+    public function getImgPath(): ?string
+    {
+        return $this->imgPath;
+    }
+
+    public function setImgPath(?string $imgPath): User
+    {
+        $this->imgPath = $imgPath;
+
+        return $this;
     }
 }

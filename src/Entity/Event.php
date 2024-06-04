@@ -24,11 +24,11 @@ class Event
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: true)]
-    private $user;
+    private ?User $user;
 
     #[ORM\ManyToOne(targetEntity: Npc::class, inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: true)]
-    private $npc;
+    private ?Npc $npc;
 
     #[ORM\ManyToMany(targetEntity: User::class)]
     #[ORM\JoinTable(name: 'event_viewer')]
@@ -50,6 +50,7 @@ class Event
     public function setId(?int $id): Event
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -69,7 +70,7 @@ class Event
         return $this->user;
     }
 
-    public function setUser($user): Event
+    public function setUser(?User $user): Event
     {
         $this->user = $user;
 
@@ -81,7 +82,7 @@ class Event
         return $this->npc;
     }
 
-    public function setNpc(FighterInterface $npc)
+    public function setNpc(?FighterInterface $npc)
     {
         $this->npc = $npc;
 

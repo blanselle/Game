@@ -1,3 +1,4 @@
+- manage npc template whith minimum and max for primary attribute
 - manage attack with 'attack %' and 'defense %'
 - manage food product
 - manage inventory (render, equiping and removing) Warning: limit equiping by position (one weapons for left hand)

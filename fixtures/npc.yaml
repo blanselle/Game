@@ -1,12 +1,13 @@
 App\Entity\Npc:
   npc_1:
-    name: 'Squelette'
-    health: 20
-    healthMax: 20
-    strength: 20
-    strengthMax: 20
-    stamina: 20
-    staminaMax: 20
+    name: 'Orc'
+    health: 50
+    healthMax: 50
+    strength: 50
+    strengthMax: 50
+    stamina: 5
+    staminaMax: 5
+    imgPath: 'assets/img/npc/orc.png'
   npc_2:
     name: 'Squelette'
     health: 20
@@ -15,11 +16,13 @@ App\Entity\Npc:
     strengthMax: 20
     stamina: 20
     staminaMax: 20
+    imgPath: 'assets/img/npc/skeleton.png'
   npc_3:
-    name: 'Squelette'
-    health: 20
-    healthMax: 20
-    strength: 20
-    strengthMax: 20
-    stamina: 20
-    staminaMax: 20
+    name: 'Orc2'
+    health: 50
+    healthMax: 50
+    strength: 50
+    strengthMax: 50
+    stamina: 5
+    staminaMax: 5
+    imgPath: 'assets/img/npc/orc.png'
