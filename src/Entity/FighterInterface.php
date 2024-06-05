@@ -34,11 +34,5 @@ interface FighterInterface
 
     public function getPublicName(): string;
 
-    public function getFreeHandsCount(): int;
-
-    public function getRightHandWeapon(): ?Weapon;
-
-    public function getArmorLevel(): int;
-
     public function getImgPath(): ?string;
 }

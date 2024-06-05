@@ -123,11 +123,6 @@ class Npc implements FighterInterface
         return null;
     }
 
-    public function getArmorLevel(): int
-    {
-        return 0;
-    }
-
     public function getImgPath(): ?string
     {
         return $this->imgPath;

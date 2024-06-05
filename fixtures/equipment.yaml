@@ -1,0 +1,41 @@
+App\Entity\Equipment:
+  equipment_1:
+    name: 'Couteau de chasse'
+    type: '<(App\Entity\Equipment::ITEM_TYPE_ONE_HAND)>'
+    position: '<(App\Entity\Equipment::ITEM_POSITION_RIGHT_HAND)>'
+    damage: 2
+    armor: 0
+    worn: true
+    shootingRange: 1
+    encumbrance: 1
+    user: '@user_1'
+  equipment_2:
+    name: 'Epée courte'
+    type: '<(App\Entity\Equipment::ITEM_TYPE_ONE_HAND)>'
+    position: null
+    damage: 4
+    armor: 0
+    worn: false
+    shootingRange: 2
+    encumbrance: 1
+    user: '@user_1'
+  equipment_3:
+    name: 'Couverle de tonneau'
+    type: '<(App\Entity\Equipment::ITEM_TYPE_SHIELD)>'
+    position: null
+    damage: 0
+    armor: 2
+    worn: false
+    shootingRange: 1
+    encumbrance: 1
+    user: '@user_1'
+  equipment_4:
+    name: 'Flamberge'
+    type: '<(App\Entity\Equipment::ITEM_TYPE_TWO_HAND)>'
+    position: null
+    damage: 8
+    armor: 0
+    worn: false
+    shootingRange: 1
+    encumbrance: 3
+    user: '@user_1'

@@ -7,7 +7,6 @@ use App\Entity\Position;
 class Punch extends AbstractAction
 {
     const int STRENGTH_NEED = 5;
-    const int DAMAGE = 5;
 
     private int $damage;
 
@@ -49,15 +48,15 @@ class Punch extends AbstractAction
         $target = $to->getFighter();
         $attacker = $from->getFighter();
 
-        $this->fighterManager->decreaseStrength($attacker, self::STRENGTH_NEED);
-
-        $damage = self::DAMAGE - $to->getFighter()->getArmorLevel();
+        $damage = floor($from->getFighter()->getStrength() / 10);
         if (0 > $damage) {
             $damage = 0;
         }
 
         $this->setDamage($damage);
         $this->fighterManager->applyDamage($target,$this->getDamage());
+
+        $this->fighterManager->decreaseStrength($attacker, self::STRENGTH_NEED);
 
         $this->report = $this->twig->render('game/report/punch.html.twig', [
             'damages' => $this->getDamage(),

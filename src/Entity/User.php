@@ -18,8 +18,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface, FighterInterface
 {
-    const MAX_WORN_WEAPON = 2;
-
     use TimestampableEntity;
     use PrimaryAttributeTrait;
 
@@ -46,11 +44,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Event::class)]
     private Collection $events;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Weapon::class)]
-    private Collection $weapons;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Armor::class)]
-    private Collection $armors;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Equipment::class)]
+    private Collection $equipments;
 
     #[ORM\Column]
     private ?string $imgPath = null;
@@ -58,8 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
     public function __construct()
     {
         $this->events = new ArrayCollection();
-        $this->weapons = new ArrayCollection();
-        $this->armors = new ArrayCollection();
+        $this->equipments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -191,119 +185,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
         return $this;
     }
 
-    public function getWeapons(): Collection
+    public function getEquipments(): Collection
     {
-        return $this->weapons;
+        return $this->equipments;
     }
 
-    public function setWeapons(Collection $weapons): User
+    public function setEquipments(Collection $equipments): User
     {
-        $this->weapons = $weapons;
+        $this->equipments = $equipments;
 
         return $this;
     }
 
-    public function addWeapon(Weapon $weapon): User
+    public function addEquipment(Equipment $equipment): User
     {
-        if ($this->getWeapons()->count() >= self::MAX_WORN_WEAPON) {
-            return $this;
+        if($this->equipments->contains($equipment)) {
+            $this->equipments->removeElement($equipment);
         }
 
-        if($this->weapons->contains($weapon)) {
-            $this->weapons->removeElement($weapon);
-        }
-
-        $weapon->setUser($this);
+        $equipment->setUser($this);
 
         return $this;
     }
-    public function removeWeapon(Weapon $weapon): User
+    public function removeEquipment(Equipment $equipment): User
     {
-        if($this->weapons->contains($weapon)) {
-            $this->weapons->removeElement($weapon);
+        if($this->equipments->contains($equipment)) {
+            $this->equipments->removeElement($equipment);
         }
 
-        $weapon->setUser(null);
+        $equipment->setUser(null);
 
         return $this;
-    }
-
-    public function getArmors(): Collection
-    {
-        return $this->armors;
-    }
-
-    public function setArmors(Collection $armors): User
-    {
-        $this->armors = $armors;
-
-        return $this;
-    }
-
-    public function addArmor(Armor $armor): self
-    {
-        if (!$this->armors->contains($armor)) {
-            $this->armors->add($armor);
-        }
-
-        $armor->setUser($this);
-
-        return $this;
-    }
-
-    public function removeArmor(Armor $armor): self
-    {
-        if ($this->armors->contains($armor)) {
-            $this->armors->removeElement($armor);
-        }
-
-        $armor->setUser(null);
-
-        return $this;
-    }
-
-    public function getFreeHandsCount(): int
-    {
-        $freeHandsCount = self::MAX_WORN_WEAPON;
-        /** @var Weapon $weapon */
-        foreach ($this->getWeapons() as $weapon) {
-            if (0 === $freeHandsCount) {
-                continue;
-            }
-
-            if ($weapon->isWorn()) {
-                $freeHandsCount--;
-            }
-        }
-
-        return $freeHandsCount;
-    }
-
-    public function getRightHandWeapon(): ?Weapon
-    {
-        /** @var Weapon $weapon */
-        foreach ($this->getWeapons() as $weapon) {
-            if ($weapon->isWorn() && Weapon::ITEM_POSITION_RIGHT_HAND === $weapon->getPosition()) {
-                return $weapon;
-            }
-        }
-
-        return null;
-    }
-    public function getArmorLevel(): int
-    {
-        $armorLevel = 0;
-
-        /** @var Armor $armor */
-        foreach ($this->getArmors() as $armor) {
-            if (!$armor->isWorn()) {
-                continue;
-            }
-
-            $armorLevel += $armor->getArmor();
-        }
-
-        return $armorLevel;
     }
 
     public function getImgPath(): ?string

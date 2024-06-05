@@ -7,7 +7,6 @@ use App\Entity\Position;
 class RightHandAttack extends AbstractAction
 {
     const int STRENGTH_NEED = 5;
-    const int DAMAGE = 5;
 
     private int $damage;
 
@@ -33,6 +32,7 @@ class RightHandAttack extends AbstractAction
 
     public function support(Position $from, Position $to): bool
     {
+        return false;
         return
             null !== $to->getFighter()
             && $from->getFighter()->getRightHandWeapon()
@@ -52,7 +52,7 @@ class RightHandAttack extends AbstractAction
 
         $this->fighterManager->decreaseStrength($attacker, self::STRENGTH_NEED);
 
-        $damage = self::DAMAGE + $attacker->getRightHandWeapon()->getDamage() - $to->getFighter()->getArmorLevel();
+        $damage = $from->getFighter()->getStrength() + $attacker->getRightHandWeapon()->getDamage();
         if (0 > $damage) {
             $damage = 0;
         }
