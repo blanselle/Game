@@ -8,7 +8,7 @@
             <h3>Porté</h3>
             <ul>
                 {% for weapon in wornWeapons %}
-                    <li>{{ weapon.name }} {{ weapon.worn ? '[E]' : '' }}</li>
+                    <li>{{ weapon.name }} [{{ weapon.position}}]</li>
                 {% endfor %}
             </ul>
         </div>

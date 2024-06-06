@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
+
 interface FighterInterface
 {
     public function getPosition(): ?Position;
@@ -35,4 +37,16 @@ interface FighterInterface
     public function getPublicName(): string;
 
     public function getImgPath(): ?string;
+
+    public function getEquipments(): Collection;
+
+    public function setEquipments(Collection $equipments): self;
+
+    public function addEquipment(Equipment $equipment): self;
+
+    public function removeEquipment(Equipment $equipment): self;
+
+    public function hasAtLeastOneFreeHand(): bool;
+
+    public function getRightHandWeapon(): ?Equipment;
 }

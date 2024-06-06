@@ -32,7 +32,6 @@ class RightHandAttack extends AbstractAction
 
     public function support(Position $from, Position $to): bool
     {
-        return false;
         return
             null !== $to->getFighter()
             && $from->getFighter()->getRightHandWeapon()
@@ -52,7 +51,7 @@ class RightHandAttack extends AbstractAction
 
         $this->fighterManager->decreaseStrength($attacker, self::STRENGTH_NEED);
 
-        $damage = $from->getFighter()->getStrength() + $attacker->getRightHandWeapon()->getDamage();
+        $damage = floor($from->getFighter()->getStrength() / 10) + $attacker->getRightHandWeapon()->getDamage();
         if (0 > $damage) {
             $damage = 0;
         }

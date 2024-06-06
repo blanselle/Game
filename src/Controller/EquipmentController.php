@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Equipment;
+use App\Enum\Equipment\WeaponPosition;
 use App\Enum\Equipment\WeaponType;
+use App\Manager\EquipmentManager;
 use App\Repository\EquipmentRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -15,10 +17,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EquipmentController extends AbstractController
 {
-    #[Route('/equipment', name: 'equipment')]
+    #[Route('/equipment/weapons', name: 'equipment_weapons')]
     public function equipment(
         Request $request,
         EquipmentRepository $equipmentRepository,
+        EquipmentManager $equipmentManager
     ): Response {
         $wornWeapons = $equipmentRepository->getOrderedWornEquipment($this->getUser(), WeaponType::values(), true);
 
@@ -33,20 +36,31 @@ class EquipmentController extends AbstractController
                 'expanded' => true,
                 'label' => false
             ])
-            ->add('Equiper', SubmitType::class)
+            ->add('equip', SubmitType::class, ['label' => 'Equiper'])
+            ->add('equip_left_hand', SubmitType::class, ['label' => 'Equiper main gauche'])
+            ->add('equip_right_hand', SubmitType::class, ['label' => 'Equiper main droite'])
         ->getForm();
 
         $unwornWeaponsForm->handleRequest($request);
 
         if ($unwornWeaponsForm->isSubmitted() && $unwornWeaponsForm->isValid()) {
-            // data is an array with "name", "email", and "message" keys
             $data = $unwornWeaponsForm->getData();
-            dd($data);
-            // user courant peut quiper cette arme, alors on désequipe l'arme et on équipe la nouvelle.
-            // Si on ne peut pas deviner l'emplacement, on le demande
+            /** @var Equipment $weapon */
+            $weapon = array_shift($data);
+
+            $positionToEquip = null;
+            if ($unwornWeaponsForm->get('equip_left_hand')->isClicked()) {
+                $positionToEquip = WeaponPosition::leftHand->value;
+            }
+            if ($unwornWeaponsForm->get('equip_right_hand')->isClicked()) {
+                $positionToEquip = WeaponPosition::rightHand->value;
+            }
+
+            $equipmentManager->equip($this->getUser(), $weapon, $positionToEquip);
+            return $this->redirectToRoute('equipment_weapons');
         }
 
-        return new Response($this->renderView('equipment/equipment.html.twig', [
+        return new Response($this->renderView('equipment/weapons.html.twig', [
             'wornWeapons' => $wornWeapons,
             'unwornWeaponsForm' => $unwornWeaponsForm
         ]));

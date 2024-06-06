@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Trait\PrimaryAttributeTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -113,16 +114,6 @@ class Npc implements FighterInterface
         return $this;
     }
 
-    public function getFreeHandsCount(): int
-    {
-        return 2;
-    }
-
-    public function getRightHandWeapon(): ?Weapon
-    {
-        return null;
-    }
-
     public function getImgPath(): ?string
     {
         return $this->imgPath;
@@ -133,5 +124,35 @@ class Npc implements FighterInterface
         $this->imgPath = $imgPath;
 
         return $this;
+    }
+
+    public function getEquipments(): Collection
+    {
+        return new ArrayCollection();
+    }
+
+    public function setEquipments(Collection $equipments): self
+    {
+        // TODO: Implement setEquipments() method.
+    }
+
+    public function addEquipment(Equipment $equipment): self
+    {
+        // TODO: Implement addEquipment() method.
+    }
+
+    public function removeEquipment(Equipment $equipment): self
+    {
+        // TODO: Implement removeEquipment() method.
+    }
+
+    public function hasAtLeastOneFreeHand(): bool
+    {
+        return true;
+    }
+
+    public function getRightHandWeapon(): ?Equipment
+    {
+        return null;
     }
 }

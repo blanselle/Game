@@ -36,7 +36,7 @@ class Punch extends AbstractAction
             null !== $to->getFighter()
             && 1 === $this->getDistance($from, $to)
             && $from->getFighter()->getStrength() >= self::STRENGTH_NEED
-            && 1 <= $from->getFighter()->getFreeHandsCount();
+            && $from->getFighter()->hasAtLeastOneFreeHand();
     }
 
     public function run(Position $from, Position $to): void

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Trait\PrimaryAttributeTrait;
+use App\Enum\Equipment\WeaponPosition;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -197,7 +198,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
         return $this;
     }
 
-    public function addEquipment(Equipment $equipment): User
+    public function addEquipment(Equipment $equipment): self
     {
         if($this->equipments->contains($equipment)) {
             $this->equipments->removeElement($equipment);
@@ -207,7 +208,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
 
         return $this;
     }
-    public function removeEquipment(Equipment $equipment): User
+
+    public function removeEquipment(Equipment $equipment): self
     {
         if($this->equipments->contains($equipment)) {
             $this->equipments->removeElement($equipment);
@@ -228,5 +230,44 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
         $this->imgPath = $imgPath;
 
         return $this;
+    }
+
+    public function hasAtLeastOneFreeHand(): bool
+    {
+        $countTwoHands = 0;
+        $countOneHand = 0;
+
+        /** @var Equipment $equipment */
+        foreach ($this->getEquipments() as $equipment) {
+            if (!$equipment->isWorn()) {
+                continue;
+            }
+
+            if (WeaponPosition::twoHands->value === $equipment->getPosition()) {
+                $countTwoHands++;
+            }
+
+            if (in_array($equipment->getPosition(), [WeaponPosition::leftHand->value, WeaponPosition::rightHand->value])) {
+                $countOneHand++;
+            }
+        }
+
+        return 0 === $countTwoHands && 1 >= $countOneHand;
+    }
+
+    public function getRightHandWeapon(): ?Equipment
+    {
+        /** @var Equipment $equipment */
+        foreach ($this->getEquipments() as $equipment) {
+            if (!$equipment->isWorn()) {
+                continue;
+            }
+
+            if (WeaponPosition::rightHand->value === $equipment->getPosition()) {
+                return $equipment;
+            }
+        }
+
+        return null;
     }
 }
