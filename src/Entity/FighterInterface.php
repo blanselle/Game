@@ -49,4 +49,8 @@ interface FighterInterface
     public function hasAtLeastOneFreeHand(): bool;
 
     public function getRightHandWeapon(): ?Equipment;
+
+    public function getTwoHandsWeapon(): ?Equipment;
+
+    public function getWornWeapons(): Collection;
 }

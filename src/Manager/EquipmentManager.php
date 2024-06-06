@@ -82,4 +82,14 @@ class EquipmentManager
         $this->equipmentRepository->save();
     }
 
+    public function dropWeapons(FighterInterface $fighter)
+    {
+        /** @var Equipment $weapon */
+        foreach ($fighter->getWornWeapons() as $weapon) {
+            $weapon->setPosition(null);
+            $weapon->setWorn(false);
+        }
+
+        $this->equipmentRepository->save();
+    }
 }

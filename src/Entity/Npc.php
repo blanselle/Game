@@ -155,4 +155,14 @@ class Npc implements FighterInterface
     {
         return null;
     }
+
+    public function getTwoHandsWeapon(): ?Equipment
+    {
+        return null;
+    }
+
+    public function getWornWeapons(): Collection
+    {
+        return new ArrayCollection();
+    }
 }

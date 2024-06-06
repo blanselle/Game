@@ -81,16 +81,4 @@ class EquipmentRepository extends ServiceEntityRepository
 
         $this->getEntityManager()->flush();
     }
-
-//    public function getRightHandWeapon(): ?Weapon
-//    {
-//        /** @var Weapon $weapon */
-//        foreach ($this->getWeapons() as $weapon) {
-//            if ($weapon->isWorn() && Weapon::ITEM_POSITION_RIGHT_HAND === $weapon->getPosition()) {
-//                return $weapon;
-//            }
-//        }
-//
-//        return null;
-//    }
 }

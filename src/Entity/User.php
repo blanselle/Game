@@ -255,6 +255,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
         return 0 === $countTwoHands && 1 >= $countOneHand;
     }
 
+    public function getTwoHandsWeapon(): ?Equipment
+    {
+        /** @var Equipment $equipment */
+        foreach ($this->getEquipments() as $equipment) {
+            if (!$equipment->isWorn()) {
+                continue;
+            }
+
+            if (WeaponPosition::twoHands->value === $equipment->getPosition()) {
+                return $equipment;
+            }
+        }
+
+        return null;
+    }
+
     public function getRightHandWeapon(): ?Equipment
     {
         /** @var Equipment $equipment */
@@ -269,5 +285,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
         }
 
         return null;
+    }
+
+    public function getWornWeapons(): Collection
+    {
+        $weapons = new ArrayCollection();
+
+        foreach ($this->getEquipments() as $equipment) {
+            if (!$equipment->isWorn()) {
+                continue;
+            }
+
+            if (in_array(
+                $equipment->getPosition(),
+                [WeaponPosition::rightHand->value, WeaponPosition::leftHand->value, WeaponPosition::twoHands->value])
+            ) {
+                $weapons->add($equipment);
+            }
+        }
+
+        return $weapons;
     }
 }

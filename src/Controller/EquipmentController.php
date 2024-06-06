@@ -34,16 +34,24 @@ class EquipmentController extends AbstractController
                 'choice_label' => 'name',
                 'multiple' => false,
                 'expanded' => true,
-                'label' => false
+                'label' => false,
+                'required' => false
             ])
             ->add('equip', SubmitType::class, ['label' => 'Equiper'])
             ->add('equip_left_hand', SubmitType::class, ['label' => 'Equiper main gauche'])
             ->add('equip_right_hand', SubmitType::class, ['label' => 'Equiper main droite'])
+            ->add('equip_drop_weapons', SubmitType::class, ['label' => 'Tout lâcher'])
         ->getForm();
 
         $unwornWeaponsForm->handleRequest($request);
 
         if ($unwornWeaponsForm->isSubmitted() && $unwornWeaponsForm->isValid()) {
+            if ($unwornWeaponsForm->get('equip_drop_weapons')->isClicked()) {
+                $equipmentManager->dropWeapons($this->getUser());
+
+                return $this->redirectToRoute('equipment_weapons');
+            }
+
             $data = $unwornWeaponsForm->getData();
             /** @var Equipment $weapon */
             $weapon = array_shift($data);
@@ -57,6 +65,7 @@ class EquipmentController extends AbstractController
             }
 
             $equipmentManager->equip($this->getUser(), $weapon, $positionToEquip);
+
             return $this->redirectToRoute('equipment_weapons');
         }
 
