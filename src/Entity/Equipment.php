@@ -10,14 +10,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 #[ORM\Entity(repositoryClass: EquipmentRepository::class)]
 class Equipment
 {
-    const ITEM_TYPE_ONE_HAND = 'one_hand';
-    const ITEM_TYPE_TWO_HAND = 'two_hands';
-    const ITEM_TYPE_SHIELD = 'shield';
-
-    const ITEM_POSITION_RIGHT_HAND = 'right_hand';
-    const ITEM_POSITION_LEFT_HAND = 'left_hand';
-    const ITEM_POSITION_TWO_HAND = 'two_hands';
-
     use TimestampableEntity;
     use ItemTrait;
 
@@ -33,7 +25,7 @@ class Equipment
     #[ORM\Column]
     private int $armor = 0;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'weapons')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'equipments')]
     #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
@@ -43,6 +35,9 @@ class Equipment
     #[ORM\Column]
     // Portée
     private int $shootingRange = 1;
+
+    #[ORM\Column(type: 'json')]
+    private array $availablePositions = [];
 
     public function getType(): ?string
     {
@@ -124,6 +119,18 @@ class Equipment
     public function setShootingRange(int $shootingRange): Equipment
     {
         $this->shootingRange = $shootingRange;
+
+        return $this;
+    }
+
+    public function getAvailablePositions(): array
+    {
+        return $this->availablePositions;
+    }
+
+    public function setAvailablePositions(array $availablePositions): Equipment
+    {
+        $this->availablePositions = $availablePositions;
 
         return $this;
     }

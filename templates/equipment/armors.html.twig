@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Equipements</h1>
+    <h2>Armures</h2>
+    <div class="d-flex">
+        <div>
+            <h3>Portées</h3>
+            <ul>
+                {% for armor in wornArmors %}
+                    <li>{{ armor.name }} [{{ armor.position}}]</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Non portées</h3>
+            <div>
+                {{ form(unwornArmorsForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

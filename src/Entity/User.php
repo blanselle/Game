@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Trait\PrimaryAttributeTrait;
+use App\Enum\Equipment\ArmorType;
 use App\Enum\Equipment\WeaponPosition;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -305,5 +306,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Fighter
         }
 
         return $weapons;
+    }
+
+    public function getWornArmors(): Collection
+    {
+        $armors = new ArrayCollection();
+
+        foreach ($this->getEquipments() as $equipment) {
+            if (!$equipment->isWorn()) {
+                continue;
+            }
+
+            if (in_array(
+                $equipment->getType(),
+                [ArmorType::heavy->value, ArmorType::lightweight->value])
+            ) {
+                $armors->add($equipment);
+            }
+        }
+
+        return $armors;
+    }
+
+    public function getArmorLevel(): int
+    {
+        $armorLevel = 0;
+
+        /** @var Equipment $equipment */
+        foreach ($this->getEquipments() as $equipment) {
+            if ($equipment->isWorn()) {
+                $armorLevel += $equipment->getArmor();
+            }
+        }
+
+        return $armorLevel;
     }
 }

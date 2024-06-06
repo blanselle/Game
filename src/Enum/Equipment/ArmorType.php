@@ -2,11 +2,10 @@
 
 namespace App\Enum\Equipment;
 
-enum WeaponType: string
+enum ArmorType: string
 {
-    case oneHand = 'one_hand';
-    case twoHands = 'two_hands';
-    case shield = 'shield';
+    case heavy = 'heavy';
+    case lightweight = 'lightweight';
 
     /** @return string[] */
     public static function values(): array

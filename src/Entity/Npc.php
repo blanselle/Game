@@ -165,4 +165,14 @@ class Npc implements FighterInterface
     {
         return new ArrayCollection();
     }
+
+    public function getWornArmors(): Collection
+    {
+        return new ArrayCollection();
+    }
+
+    public function getArmorLevel(): int
+    {
+        return 0;
+    }
 }

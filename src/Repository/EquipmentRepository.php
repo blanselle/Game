@@ -25,7 +25,7 @@ class EquipmentRepository extends ServiceEntityRepository
         parent::__construct($registry, Equipment::class);
     }
 
-    public function getOrderedWornEquipmentQueryBuilder(User $user, array $types, bool $worn): QueryBuilder
+    public function getOrderedEquipmentQueryBuilder(User $user, array $types, bool $worn): QueryBuilder
     {
         $qb = $this->createQueryBuilder('e');
 
@@ -40,20 +40,12 @@ class EquipmentRepository extends ServiceEntityRepository
             ]);
     }
 
-    public function getOrderedWornEquipment(User $user, array $types, bool $worn)
+    public function getOrderedEquipment(User $user, array $types, bool $worn)
     {
         return
-            $this->getOrderedWornEquipmentQueryBuilder($user, $types, $worn)
+            $this->getOrderedEquipmentQueryBuilder($user, $types, $worn)
             ->getQuery()
             ->getResult();
-    }
-
-    public function getEquipmentByPosition(User $user, array $types, bool $worn)
-    {
-        return
-            $this->getOrderedWornEquipmentQueryBuilder($user, $types, $worn)
-                ->getQuery()
-                ->getResult();
     }
 
     public function getWornEquipementForUserAndPositions(FighterInterface $fighter, array $positions)

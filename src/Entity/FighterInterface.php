@@ -53,4 +53,8 @@ interface FighterInterface
     public function getTwoHandsWeapon(): ?Equipment;
 
     public function getWornWeapons(): Collection;
+
+    public function getWornArmors(): Collection;
+
+    public function getArmorLevel(): int;
 }

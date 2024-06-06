@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\Equipment;
 use App\Entity\FighterInterface;
 use App\Entity\Position;
+use App\Enum\Equipment\ArmorPosition;
 use App\Enum\Equipment\WeaponPosition;
 use App\Enum\Equipment\WeaponType;
 use App\Repository\EquipmentRepository;
@@ -22,51 +23,61 @@ class EquipmentManager
         }
 
         switch ($type) {
-            case WeaponType::OneHand->value:
-            case WeaponType::Shield->value:
+            case WeaponType::oneHand->value:
+            case WeaponType::shield->value:
                 return [WeaponPosition::rightHand->value, WeaponPosition::leftHand->value];
-            case WeaponType::TwoHand->value:
+            case WeaponType::twoHands->value:
                 return [WeaponPosition::twoHands->value];
         }
 
         return [];
     }
 
-    public function equip(FighterInterface $fighter, Equipment $equipment, ?string $position): void
+    private function getAvailablePositionForArmorType(string $type): array
     {
-        if (null !== $position && !in_array($position, $this->getAvailablePositionForWeaponType($equipment->getType()))) {
+        if (!in_array($type, array_values(WeaponType::values()))) {
+            return [];
+        }
+
+        switch ($type) {
+            case WeaponType::oneHand->value:
+            case WeaponType::shield->value:
+                return [WeaponPosition::rightHand->value, WeaponPosition::leftHand->value];
+            case WeaponType::twoHands->value:
+                return [WeaponPosition::twoHands->value];
+        }
+
+        return [];
+    }
+
+    public function equip(FighterInterface $fighter, Equipment $equipment, string $position): void
+    {
+        if (!in_array($position, $equipment->getAvailablePositions())) {
             return;
         }
 
         $weaponsToRemove = [];
-        if (WeaponType::TwoHand->value === $equipment->getType()) {
+        if (WeaponPosition::twoHands->value === $position) {
             $weaponsToRemove = $this->equipmentRepository->getWornEquipementForUserAndPositions(
                 $fighter,
                 [WeaponPosition::rightHand->value, WeaponPosition::leftHand->value, WeaponPosition::twoHands->value]
             );
-
-            $position = WeaponPosition::twoHands->value;
         }
 
-        if (WeaponType::OneHand->value === $equipment->getType()) {
-            if (is_null($position)) {
-                $position = WeaponPosition::rightHand->value;
-            }
-
+        if (in_array($position, [WeaponPosition::rightHand->value, WeaponPosition::leftHand->value])) {
             $weaponsToRemove = $this->equipmentRepository->getWornEquipementForUserAndPositions(
                 $fighter,
                 [$position, WeaponPosition::twoHands->value]
             );
         }
 
-        if (WeaponType::Shield->value === $equipment->getType()) {
-            if (is_null($position)) {
-                $position = WeaponPosition::leftHand->value;
-            }
-
+        if (in_array(
+            $position,
+            ArmorPosition::values())
+        ) {
             $weaponsToRemove = $this->equipmentRepository->getWornEquipementForUserAndPositions(
                 $fighter,
-                [$position, WeaponPosition::twoHands->value]
+                [$position]
             );
         }
 
@@ -88,6 +99,17 @@ class EquipmentManager
         foreach ($fighter->getWornWeapons() as $weapon) {
             $weapon->setPosition(null);
             $weapon->setWorn(false);
+        }
+
+        $this->equipmentRepository->save();
+    }
+
+    public function dropArmors(FighterInterface $fighter)
+    {
+        /** @var Equipment $armor */
+        foreach ($fighter->getWornArmors() as $armor) {
+            $armor->setPosition(null);
+            $armor->setWorn(false);
         }
 
         $this->equipmentRepository->save();

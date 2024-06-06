@@ -7,7 +7,7 @@ use App\Enum\Equipment\WeaponPosition;
 
 class TwoHandsAttack extends AbstractAction
 {
-    const int STRENGTH_NEED = 5;
+    const int STRENGTH_NEED = 10;
 
     private int $damage;
 
@@ -50,10 +50,9 @@ class TwoHandsAttack extends AbstractAction
         $target = $to->getFighter();
         $attacker = $from->getFighter();
 
-        $this->fighterManager->decreaseStrength($attacker, self::STRENGTH_NEED);
-
         $damage = floor($from->getFighter()->getStrength() / 10)
-            + $attacker->getTwoHandsWeapon()->getDamage();
+            + $attacker->getTwoHandsWeapon()->getDamage()
+            - $to->getFighter()->getArmorLevel();
 
         if (0 > $damage) {
             $damage = 0;
@@ -61,6 +60,8 @@ class TwoHandsAttack extends AbstractAction
 
         $this->setDamage($damage);
         $this->fighterManager->applyDamage($target, $this->getDamage());
+
+        $this->fighterManager->decreaseStrength($attacker, self::STRENGTH_NEED);
 
         $this->report = $this->twig->render('game/report/twoHandsAttack.html.twig', [
             'damages' => $this->getDamage(),

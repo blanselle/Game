@@ -1,4 +1,4 @@
-- manage equipment (créer un service avec une fonction qui permet de savoir si un joueur peut équipe une arme, une autre fonction qui equipe)
+- manage armors
 - manage npc template whith minimum and max for primary attribute
 - manage attack with 'attack %' and 'defense %'
 - manage food product

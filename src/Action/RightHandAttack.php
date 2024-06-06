@@ -49,15 +49,18 @@ class RightHandAttack extends AbstractAction
         $target = $to->getFighter();
         $attacker = $from->getFighter();
 
-        $this->fighterManager->decreaseStrength($attacker, self::STRENGTH_NEED);
+        $damage = floor($from->getFighter()->getStrength() / 10)
+            + $attacker->getRightHandWeapon()->getDamage()
+            - $to->getFighter()->getArmorLevel();
 
-        $damage = floor($from->getFighter()->getStrength() / 10) + $attacker->getRightHandWeapon()->getDamage();
         if (0 > $damage) {
             $damage = 0;
         }
 
         $this->setDamage($damage);
         $this->fighterManager->applyDamage($target, $this->getDamage());
+
+        $this->fighterManager->decreaseStrength($attacker, self::STRENGTH_NEED);
 
         $this->report = $this->twig->render('game/report/rightHandAttack.html.twig', [
             'damages' => $this->getDamage(),

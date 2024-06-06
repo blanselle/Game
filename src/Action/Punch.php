@@ -48,7 +48,8 @@ class Punch extends AbstractAction
         $target = $to->getFighter();
         $attacker = $from->getFighter();
 
-        $damage = floor($from->getFighter()->getStrength() / 10);
+        $damage = floor($from->getFighter()->getStrength() / 10) - $to->getFighter()->getArmorLevel();
+
         if (0 > $damage) {
             $damage = 0;
         }
